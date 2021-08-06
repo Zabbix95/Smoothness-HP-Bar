@@ -7,27 +7,20 @@ using UnityEngine.UI;
 public class HealthAmountDisplay : MonoBehaviour
 {
     [SerializeField] private HealthChangeButtons _healthChangeButtons;
-    [SerializeField] private Slider _healthbar;
-    [SerializeField] private float _displayedHealth;
+    [SerializeField] private Slider _healthbar;    
     [SerializeField] private float _smoothness = 0.1f;
 
     private int _targetHealth;
 
     private void Awake()
     {
-        _healthbar = GetComponent<Slider>();
-        _healthChangeButtons = GetComponentInParent<HealthChangeButtons>();
+        _healthbar = GetComponent<Slider>();        
     }
 
     private void OnEnable()
     {
         _healthChangeButtons.HealthChanged += OnHealthChanged;
-    }
-
-    private void Start()
-    {
-        _displayedHealth = _healthChangeButtons.CurrentHealth;
-    }
+    }    
 
     private void OnDisable()
     {
@@ -49,10 +42,8 @@ public class HealthAmountDisplay : MonoBehaviour
     {
         while (_healthbar.value != _targetHealth)
         {
-            _healthbar.value = Mathf.MoveTowards(_healthbar.value, _targetHealth, _smoothness);
-            _displayedHealth = _healthbar.value;            
-            yield return null;
-            _displayedHealth = _targetHealth;
+            _healthbar.value = Mathf.MoveTowards(_healthbar.value, _targetHealth, _smoothness);                       
+            yield return null;            
         }       
     }
 

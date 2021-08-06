@@ -8,6 +8,8 @@ public class HealthChangeButtons : MonoBehaviour
 {
     [SerializeField] private int _currentHealth = 100;
 
+    private int _damageHealValue = 10;
+
     public int CurrentHealth
     {
         get => _currentHealth;
@@ -23,13 +25,13 @@ public class HealthChangeButtons : MonoBehaviour
 
     public void OnDamageButtonClick()
     {
-        CurrentHealth -= 10;
+        CurrentHealth -= _damageHealValue;
         HealthChanged?.Invoke(CurrentHealth);
     }
 
     public void OnHealButtonClick()
     {
-        CurrentHealth += 10;
+        CurrentHealth += _damageHealValue;
         HealthChanged?.Invoke(CurrentHealth);
     }
     
