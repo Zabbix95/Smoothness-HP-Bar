@@ -5,34 +5,25 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class HealthChangeButtons : MonoBehaviour
-{
-    [SerializeField] private int _currentHealth = 100;
+{    
 
-    private int _damageHealValue = 10;
+    private int _damageValue = 10;
+    private int _healValue = 10;
+    private PlayerHealthiness _playerHealthiness;   
 
-    public int CurrentHealth
+    private void Start()
     {
-        get => _currentHealth;
-        private set
-        {
-            if ((value >= 0) && (value <= 100))
-            {
-                _currentHealth = value;
-            }
-        }
+        _playerHealthiness = FindObjectOfType<PlayerHealthiness>();
     }
-    public event UnityAction<int> HealthChanged;
 
     public void OnDamageButtonClick()
     {
-        CurrentHealth -= _damageHealValue;
-        HealthChanged?.Invoke(CurrentHealth);
+        _playerHealthiness.GetDamage(_damageValue);
     }
 
     public void OnHealButtonClick()
     {
-        CurrentHealth += _damageHealValue;
-        HealthChanged?.Invoke(CurrentHealth);
+        _playerHealthiness.GetHeal(_healValue);
     }
     
 }

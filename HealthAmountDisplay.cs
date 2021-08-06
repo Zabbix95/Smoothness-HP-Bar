@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Slider))]
 public class HealthAmountDisplay : MonoBehaviour
 {
-    [SerializeField] private HealthChangeButtons _healthChangeButtons;
+    [SerializeField] private PlayerHealthiness _playerHealthiness;
     [SerializeField] private Slider _healthbar;    
     [SerializeField] private float _smoothness = 0.1f;
 
@@ -14,17 +14,18 @@ public class HealthAmountDisplay : MonoBehaviour
 
     private void Awake()
     {
-        _healthbar = GetComponent<Slider>();        
+        _healthbar = GetComponent<Slider>();
+        _playerHealthiness = FindObjectOfType<PlayerHealthiness>();
     }
 
     private void OnEnable()
     {
-        _healthChangeButtons.HealthChanged += OnHealthChanged;
+        _playerHealthiness.HealthChanged += OnHealthChanged;
     }    
 
     private void OnDisable()
     {
-        _healthChangeButtons.HealthChanged -= OnHealthChanged;
+        _playerHealthiness.HealthChanged -= OnHealthChanged;
     }
 
     private void OnHealthChanged(int currenthealth)
