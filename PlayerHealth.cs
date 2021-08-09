@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private int _currentHealth = 100;
-    private int _maxHealth = 100;
-    private int _meatAmount = 0; // это поле и другие значени€ и функции содержащие Satiety относ€тс€ к другому заданию. ѕросто не стал убирать чтобы не портить целостность проекта.
+    [SerializeField] private int _currentHealth = 100;
+    [SerializeField] private int _maxHealth = 100;
+   
 
     public int CurrentHealth
     {
@@ -20,15 +20,8 @@ public class PlayerHealth : MonoBehaviour
             }
         }
     }
-
-    public UnityAction<int> SatietyChanged;
-    public UnityAction<int> HealthChanged;
-    public void SatietyAlert(bool hungry)
-    {
-        _meatAmount = hungry ? --_meatAmount : ++_meatAmount;
-
-        SatietyChanged?.Invoke(_meatAmount);
-    }
+   
+    public UnityAction<int> HealthChanged;    
     
     public void ApplyDamage(int damage)
     {

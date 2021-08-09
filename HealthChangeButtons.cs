@@ -6,24 +6,19 @@ using UnityEngine.Events;
 
 public class HealthChangeButtons : MonoBehaviour
 {    
+    [SerializeField]private PlayerHealth _playerHealth;   
 
     private int _damageValue = 10;
-    private int _healValue = 10;
-    private PlayerHealth _playerHealthiness;   
-
-    private void Start()
-    {
-        _playerHealthiness = FindObjectOfType<PlayerHealth>();
-    }
+    private int _healValue = 10;    
 
     public void OnDamageButtonClick()
     {
-        _playerHealthiness.ApplyDamage(_damageValue);
+        _playerHealth.ApplyDamage(_damageValue);
     }
 
     public void OnHealButtonClick()
     {
-        _playerHealthiness.ApplyHeal(_healValue);
+        _playerHealth.ApplyHeal(_healValue);
     }
     
 }

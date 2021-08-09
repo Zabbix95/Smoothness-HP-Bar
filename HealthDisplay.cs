@@ -6,26 +6,26 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Slider))]
 public class HealthDisplay : MonoBehaviour
 {
-    [SerializeField] private PlayerHealth _playerHealthiness;
+    [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private Slider _healthbar;    
-    [SerializeField] private float _smoothness = 0.1f;
+    [SerializeField] private float _pathTime;
 
+    private float _pathRunningtime;
     private int _targetHealth;
 
     private void Awake()
     {
-        _healthbar = GetComponent<Slider>();
-        _playerHealthiness = FindObjectOfType<PlayerHealth>();
+        _healthbar = GetComponent<Slider>();        
     }
 
     private void OnEnable()
     {
-        _playerHealthiness.HealthChanged += OnHealthChanged;
+        _playerHealth.HealthChanged += OnHealthChanged;
     }    
 
     private void OnDisable()
     {
-        _playerHealthiness.HealthChanged -= OnHealthChanged;
+        _playerHealth.HealthChanged -= OnHealthChanged;
     }
 
     private void OnHealthChanged(int currenthealth)
@@ -41,9 +41,11 @@ public class HealthDisplay : MonoBehaviour
 
     private IEnumerator DisplayHealthValue()
     {
+        _pathRunningtime = 0;
         while (_healthbar.value != _targetHealth)
         {
-            _healthbar.value = Mathf.MoveTowards(_healthbar.value, _targetHealth, _smoothness);                       
+            _pathRunningtime += Time.deltaTime;
+            _healthbar.value = Mathf.MoveTowards(_healthbar.value, _targetHealth, _pathRunningtime/_pathTime);                       
             yield return null;            
         }       
     }
