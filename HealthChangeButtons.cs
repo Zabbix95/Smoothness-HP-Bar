@@ -9,21 +9,21 @@ public class HealthChangeButtons : MonoBehaviour
 
     private int _damageValue = 10;
     private int _healValue = 10;
-    private PlayerHealthiness _playerHealthiness;   
+    private PlayerHealth _playerHealthiness;   
 
     private void Start()
     {
-        _playerHealthiness = FindObjectOfType<PlayerHealthiness>();
+        _playerHealthiness = FindObjectOfType<PlayerHealth>();
     }
 
     public void OnDamageButtonClick()
     {
-        _playerHealthiness.GetDamage(_damageValue);
+        _playerHealthiness.ApplyDamage(_damageValue);
     }
 
     public void OnHealButtonClick()
     {
-        _playerHealthiness.GetHeal(_healValue);
+        _playerHealthiness.ApplyHeal(_healValue);
     }
     
 }

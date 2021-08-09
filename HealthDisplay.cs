@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-public class HealthAmountDisplay : MonoBehaviour
+public class HealthDisplay : MonoBehaviour
 {
-    [SerializeField] private PlayerHealthiness _playerHealthiness;
+    [SerializeField] private PlayerHealth _playerHealthiness;
     [SerializeField] private Slider _healthbar;    
     [SerializeField] private float _smoothness = 0.1f;
 
@@ -15,7 +15,7 @@ public class HealthAmountDisplay : MonoBehaviour
     private void Awake()
     {
         _healthbar = GetComponent<Slider>();
-        _playerHealthiness = FindObjectOfType<PlayerHealthiness>();
+        _playerHealthiness = FindObjectOfType<PlayerHealth>();
     }
 
     private void OnEnable()
