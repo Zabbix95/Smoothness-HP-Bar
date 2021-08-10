@@ -8,10 +8,10 @@ public class HealthDisplay : MonoBehaviour
 {
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private Slider _healthbar;    
-    [SerializeField] private float _pathTime;
+    [SerializeField] private float _smoothTime;
 
-    private float _pathRunningtime;
-    private int _targetHealth;
+    private float _smoothRunningTime;    
+    private bool _coroutineIsRunning;
 
     private void Awake()
     {
@@ -30,24 +30,21 @@ public class HealthDisplay : MonoBehaviour
 
     private void OnHealthChanged(int currenthealth)
     {
-        _targetHealth = currenthealth;
-        StartCoroutine(CheckQueueCorutines());         
-    }
+        if (_coroutineIsRunning == false)
+            StartCoroutine(DisplayHealthValue(currenthealth));         
+    }    
 
-    private IEnumerator CheckQueueCorutines()
+    private IEnumerator DisplayHealthValue(int targetHealth)
     {
-        yield return StartCoroutine(DisplayHealthValue());
-    }
-
-    private IEnumerator DisplayHealthValue()
-    {
-        _pathRunningtime = 0;
-        while (_healthbar.value != _targetHealth)
+        _coroutineIsRunning = true;
+        _smoothRunningTime = 0;
+        while (_healthbar.value != targetHealth)
         {
-            _pathRunningtime += Time.deltaTime;
-            _healthbar.value = Mathf.MoveTowards(_healthbar.value, _targetHealth, _pathRunningtime/_pathTime);                       
+            _smoothRunningTime += Time.deltaTime;
+            _healthbar.value = Mathf.MoveTowards(_healthbar.value, targetHealth, _smoothRunningTime/_smoothTime);                       
             yield return null;            
-        }       
+        }
+        _coroutineIsRunning = false;
     }
 
 }
