@@ -12,6 +12,7 @@ public class HealthDisplay : MonoBehaviour
 
     private float _smoothRunningTime;    
     private bool _coroutineIsRunning;
+    private Coroutine _healthChanging;
 
     private void Awake()
     {
@@ -29,22 +30,20 @@ public class HealthDisplay : MonoBehaviour
     }
 
     private void OnHealthChanged(int currenthealth)
-    {
-        if (_coroutineIsRunning == false)
-            StartCoroutine(DisplayHealthValue(currenthealth));         
+    {        
+        if (_healthChanging == null)
+            _healthChanging = StartCoroutine(DisplayHealthValue(currenthealth));         
     }    
 
     private IEnumerator DisplayHealthValue(int targetHealth)
-    {
-        _coroutineIsRunning = true;
+    {        
         _smoothRunningTime = 0;
         while (_healthbar.value != targetHealth)
         {
             _smoothRunningTime += Time.deltaTime;
             _healthbar.value = Mathf.MoveTowards(_healthbar.value, targetHealth, _smoothRunningTime/_smoothTime);                       
             yield return null;            
-        }
-        _coroutineIsRunning = false;
+        }        
     }
 
 }
