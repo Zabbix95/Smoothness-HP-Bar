@@ -31,8 +31,10 @@ public class HealthDisplay : MonoBehaviour
 
     private void OnHealthChanged(int currenthealth)
     {        
-        if (_healthChanging == null)
-            _healthChanging = StartCoroutine(DisplayHealthValue(currenthealth));         
+        if (_healthChanging != null)        
+            StopCoroutine(_healthChanging);
+        
+        _healthChanging = StartCoroutine(DisplayHealthValue(currenthealth));        
     }    
 
     private IEnumerator DisplayHealthValue(int targetHealth)
